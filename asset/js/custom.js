@@ -54,3 +54,44 @@ $('#logout').click(function () {
 	sessionStorage.clear()
 	window.location.href = "index.html"
 })
+
+$('#secure-message-form').submit(function(e){	
+	e.preventDefault();
+
+	const data = {
+		action: "createReceipt",
+		date: $('#formDate').val(),
+		name: $('#formClientName').val(),
+		email: $('#formClientEmail').val(),
+		dob: $('#formClientDOB').val(),
+		amount: $('#formAmount').val(),
+		receivedBy: $('#formInitials').val()
+	}
+
+	if(!data.date || !data.name || !data.email || !data.dob || !data.amount || !data.receivedBy){
+		return;
+	}
+
+	$.ajax({
+		url: 'https://script.google.com/macros/s/AKfycbx30xCSu4aE4l2eAJpoSbo0vWsjc46g4GS3MGxfUjFZjCJOFGA0iEYdqgGdnI6fex2I/exec',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		crossDomain: true,
+		type: "POST",
+		dataType: "json",
+		data: data,
+		success: function (res) {
+			console.log(res)
+			if (res.check) {
+				
+			} else {
+				$('.msg-error').show();
+			}
+		},
+		error: function (err) {
+			$('.msg-error').show();
+			console.log(err);
+		}
+	});
+})
