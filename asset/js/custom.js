@@ -22,7 +22,7 @@ $('#loginForm').submit(function (e) {
 	}
 
 	$.ajax({
-		url: 'https://script.google.com/macros/s/AKfycbzkjSD78kGFh_K2Ndq4O0JAFZ_qPxsP89ywnTV30u9cn5aTyl0213NTPl-DDlIVWz3V/exec',
+		url: 'https://script.google.com/macros/s/AKfycbx30xCSu4aE4l2eAJpoSbo0vWsjc46g4GS3MGxfUjFZjCJOFGA0iEYdqgGdnI6fex2I/exec',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
