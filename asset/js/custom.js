@@ -38,7 +38,7 @@ $('#loginForm').submit(function (e) {
 			console.log(res)
 			if (res.check) {
 				sessionStorage.setItem("isLogged", res.check)
-				window.location.href = "user-home.html"
+				window.location.href = "users-home.html"
 			} else {
 				$('.msg-error').show();
 			}
