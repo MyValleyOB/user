@@ -49,3 +49,8 @@ $('#loginForm').submit(function (e) {
 		}
 	});
 })
+
+$('#logout').click(function () {
+	sessionStorage.clear()
+	window.location.href = "index.html"
+})
