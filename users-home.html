@@ -125,7 +125,7 @@
 										<label for="CardID">
 											Debit/Credit Card
 										</label>
-										<input type="text" class="checkText" id="CardText" placeholder="# Last Four Digit"/>
+										<input type="number" class="checkText" id="CardText" placeholder="# Last Four Digit" minlength="4" maxlength="4"/>
 									</div>
 
 									<div class="input-bx input-checkbox secure-message-checkbox">
@@ -133,7 +133,7 @@
 										<label for="CheckID">
 											Check
 										</label>
-										<input type="text" class="checkText" id="CheckText" placeholder="# Last Four Digit"/>
+										<input type="number" class="checkText" id="CheckText" placeholder="# Last Four Digit" minlength="4" maxlength="4"/>
 									</div>
 
 									<button type="submit" class="custom-btn">Send</button>		
@@ -141,6 +141,7 @@
 
 							</div><!-- col -->						
 						</div><!-- row -->
+						<p class="msg-error">Please enter all required information</p>
 					</form>
 
 				</div><!-- container -->
