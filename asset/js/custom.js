@@ -140,7 +140,7 @@ $('#receiptList').ready(function(){
 			</tr>` + res.map((el)=>{
 				el[1] = new Date(el[1])
 				return el[0]=="NO DATA" ? `<tr><td>NO RECEIPT FOUND</td></tr>` :`
-					<tr>
+					<tr class="list-item">
 						<td>${el[2]}</td>
 						<td>${(el[1].getMonth() + 1) + "-" + el[1].getDate() + "-" + el[1].getFullYear() }</td>
 						<td>$${el[6]}</td>
@@ -166,4 +166,19 @@ $('#receiptList').ready(function(){
 			console.log(err);
 		}
 	});
+})
+
+$("#search").keyup(function(e){
+
+	$(".list-item").each(function(i, el){
+		el.hidden = false;
+	})
+
+	let searchQuery = $("#search").val();
+
+	$(".list-item").each(function(i, el){
+		if(!el.innerText.includes(searchQuery)){
+			el.hidden = true;
+		}
+	})
 })
