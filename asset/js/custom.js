@@ -46,7 +46,6 @@ $('#loginForm').submit(function (e) {
 			ip: clientIP
 		},
 		success: function (res) {
-			console.log(res)
 			if (res.check) {
 				sessionStorage.setItem("isLogged", res.check)
 				window.location.href = "users-home.html"
@@ -100,7 +99,6 @@ $('#secure-message-form').submit(function(e){
 		dataType: "json",
 		data: data,
 		success: function (res) {
-			console.log(res)
 			if (res.status == "done") {
 				$('.msg-error').hide();
 			} else {
@@ -116,6 +114,9 @@ $('#secure-message-form').submit(function(e){
 
 $('#receiptList').ready(function(){
 	if(!document.getElementById("receiptList")) return;
+
+	document.getElementById("receiptList").innerHTML = "<img class='mx-auto d-block' src='asset/img/logo.png'>"
+
 	$.ajax({
 		url: 'https://script.google.com/macros/s/AKfycbx30xCSu4aE4l2eAJpoSbo0vWsjc46g4GS3MGxfUjFZjCJOFGA0iEYdqgGdnI6fex2I/exec',
 		headers: {
@@ -128,7 +129,6 @@ $('#receiptList').ready(function(){
 			action: "getReceipts",
 		},
 		success: function (res) {
-			console.log(res)
 			document.getElementById("receiptList").innerHTML = `
 			<tr>
 				<th>Receipt ID</th>
@@ -169,13 +169,10 @@ $('#receiptList').ready(function(){
 })
 
 $("#search").keyup(function(e){
-
 	$(".list-item").each(function(i, el){
 		el.hidden = false;
 	})
-
 	let searchQuery = $("#search").val();
-
 	$(".list-item").each(function(i, el){
 		if(!el.innerText.includes(searchQuery)){
 			el.hidden = true;
