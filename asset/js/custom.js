@@ -13,6 +13,16 @@ $(document).ready(function(){
 
 $('#loginForm').submit(function (e) {
 	e.preventDefault();
+
+	const clientIP = () =>{
+		let ip;
+		$.ajaxSetup({async: false});
+		$.get('https://api.ipify.org?format=json', function(res){
+			ip = res.ip
+		})
+		return ip;
+	}
+
 	const username = $('#username').val();
 	const password = $('#password').val();
 
@@ -32,7 +42,8 @@ $('#loginForm').submit(function (e) {
 		data: {
 			action: "login",
 			username: username,
-			password: password
+			password: password,
+			ip: clientIP
 		},
 		success: function (res) {
 			console.log(res)
@@ -57,8 +68,6 @@ $('#logout').click(function () {
 
 $('#secure-message-form').submit(function(e){	
 	e.preventDefault();
-
-	console.log(e)
 
 	let data = {
 		action: "createReceipt",
@@ -106,6 +115,7 @@ $('#secure-message-form').submit(function(e){
 })
 
 $('#receiptList').ready(function(){
+	if(!document.getElementById("receiptList")) return;
 	$.ajax({
 		url: 'https://script.google.com/macros/s/AKfycbx30xCSu4aE4l2eAJpoSbo0vWsjc46g4GS3MGxfUjFZjCJOFGA0iEYdqgGdnI6fex2I/exec',
 		headers: {
