@@ -7,7 +7,9 @@ $(document).ready(function(){
 		$(this).siblings('.checkText').show();
 		$(this).parents('.input-checkbox').siblings().find('.checkText').hide();
 	});
-	
+
+	$("#formDate").val(new Date().toLocaleDateString('lt-lt', {year:"numeric", month:"numeric", day:"numeric"}))
+
 // document ready end 
 });
 
@@ -101,6 +103,7 @@ $('#secure-message-form').submit(function(e){
 		success: function (res) {
 			if (res.status == "done") {
 				$('.msg-error').hide();
+				document.getElementById("secure-message-form").reset();
 			} else {
 				$('.msg-error').show();
 			}
@@ -110,6 +113,7 @@ $('#secure-message-form').submit(function(e){
 			console.log(err);
 		}
 	});
+	
 })
 
 $('#receiptList').ready(function(){
@@ -178,4 +182,9 @@ $("#search").keyup(function(e){
 			el.hidden = true;
 		}
 	})
+})
+
+$(".pasteOnly").keypress(function(e){
+	e.preventDefault()
+	if(e) e.target.value = "";
 })
