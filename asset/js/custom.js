@@ -8,6 +8,8 @@ $(document).ready(function(){
 		$(this).parents('.input-checkbox').siblings().find('.checkText').hide();
 	});
 
+	sessionCheck();
+	
 	$("#formDate").val(new Date().toLocaleDateString('lt-lt', {year:"numeric", month:"numeric", day:"numeric"}))
 
 // document ready end 
@@ -48,8 +50,9 @@ $('#loginForm').submit(function (e) {
 			ip: clientIP
 		},
 		success: function (res) {
-			if (res.check) {
-				sessionStorage.setItem("isLogged", res.check)
+			console.log(res);
+			if (res.authorization == "approved") {
+				document.cookie = "_ulsID=" + res.sessionID
 				window.location.href = "users-home.html"
 			} else {
 				$('.msg-error').show();
@@ -62,9 +65,38 @@ $('#loginForm').submit(function (e) {
 	});
 })
 
+function sessionCheck() {
+	$.ajax({
+		url: 'https://script.google.com/macros/s/AKfycbx30xCSu4aE4l2eAJpoSbo0vWsjc46g4GS3MGxfUjFZjCJOFGA0iEYdqgGdnI6fex2I/exec',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		crossDomain: true,
+		type: "POST",
+		dataType: "json",
+		data: {
+			action: "login",
+			sessionID: document.cookie.split("=")[1]
+		},
+		success: function (res) {
+			console.log(res);
+			if (res.authorization == "approved") {
+				window.location.pathname == "/index.html" || window.location.pathname == "/" ? window.location.pathname = "/users-home.html" : null
+			} else {
+				window.location.pathname == "/index.html" || window.location.pathname == "/" ? null : window.location.pathname = "/index.html"
+			}
+		},
+		error: function (err) {
+			window.location.pathname == "/index.html" || window.location.pathname == "/" ? null : window.location.pathname = "/index.html"
+			console.log(err);
+		}
+	});
+
+}
+
 $('#logout').click(function () {
-	sessionStorage.clear()
-	window.location.href = "index.html"
+	document.cookie = "_ulsID=;"
+	window.location.pathname = "/"
 })
 
 $('#secure-message-form').submit(function(e){	
@@ -72,6 +104,7 @@ $('#secure-message-form').submit(function(e){
 
 	let data = {
 		action: "createReceipt",
+		sessionID: document.cookie.split("=")[1],
 		date: $('#formDate').val(),
 		name: $('#formClientName').val(),
 		email: $('#formClientEmail').val(),
@@ -113,7 +146,6 @@ $('#secure-message-form').submit(function(e){
 			console.log(err);
 		}
 	});
-	
 })
 
 $('#receiptList').ready(function(){
@@ -131,6 +163,7 @@ $('#receiptList').ready(function(){
 		dataType: "json",
 		data: {
 			action: "getReceipts",
+			sessionID: document.cookie.split("=")[1]
 		},
 		success: function (res) {
 			document.getElementById("receiptList").innerHTML = `
